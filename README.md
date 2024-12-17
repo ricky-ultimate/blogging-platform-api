@@ -1,85 +1,99 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Personal Blogging Platform API
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+This project is a RESTful API for a personal blogging platform built with **NestJS** and **PostgreSQL** using **Prisma** as the ORM. The API allows users to create, update, delete, and retrieve blog posts with search functionality.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+---
 
-## Description
+## Features
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- **Create** a new blog post.
+- **Update** an existing blog post.
+- **Delete** an existing blog post.
+- **Get** a single blog post by its ID.
+- **Get all** blog posts with an optional search filter.
+- **Search** blog posts by title, content, or category.
 
-## Project setup
+---
 
-```bash
-$ npm install
+## Technologies Used
+
+- **NestJS** - A progressive Node.js framework for building efficient APIs.
+- **PostgreSQL** - Relational database to store blog posts.
+- **Prisma** - Modern ORM for database management.
+- **Class Validator** - For request body validation.
+
+---
+
+## API Endpoints
+
+| **Method** | **Endpoint**      | **Description**                         |
+|------------|-------------------|-----------------------------------------|
+| `POST`     | `/posts`          | Create a new blog post.                 |
+| `PUT`      | `/posts/:id`      | Update an existing blog post by ID.     |
+| `DELETE`   | `/posts/:id`      | Delete a blog post by ID.               |
+| `GET`      | `/posts/:id`      | Retrieve a single blog post by ID.      |
+| `GET`      | `/posts`          | Retrieve all blog posts.                |
+| `GET`      | `/posts?term=xyz` | Search posts by title, content, or category. |
+
+---
+
+## Request Body Examples
+
+### Create a Blog Post
+
+```json
+POST /posts
+{
+  "title": "My First Blog Post",
+  "content": "This is the content of my first blog post.",
+  "category": "Technology",
+  "tags": ["Tech", "Programming"]
+}
 ```
 
-## Compile and run the project
+### Update a Blog Post
 
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+```json
+PUT /posts/1
+{
+  "title": "My Updated Blog Post",
+  "content": "This is the updated content.",
+  "category": "Technology",
+  "tags": ["Tech", "Updated"]
+}
 ```
 
-## Run tests
+---
 
-```bash
-# unit tests
-$ npm run test
+## Running the Project
 
-# e2e tests
-$ npm run test:e2e
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/ricky-ultimate/blogging-platform-api.git
+   cd blogging-platform-api
+   ```
 
-# test coverage
-$ npm run test:cov
-```
+2. **Install dependencies:**
+   ```bash
+   npm install
+   ```
 
-## Resources
+3. **Set up the database:**
+   - Update `DATABASE_URL` in `.env` file with your PostgreSQL connection string.
+   - Run the following commands:
+     ```bash
+     npx prisma generate
+     ```
 
-Check out a few resources that may come in handy when working with NestJS:
+4. **Run the application:**
+   ```bash
+   npm run start:dev
+   ```
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+---
 
-## Support
+## Future Enhancements
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+- Pagination for retrieving blog posts.
+- User authentication and authorization.
+- Unit tests for controllers and services.
