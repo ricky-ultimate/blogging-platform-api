@@ -33,7 +33,12 @@ describe('PostsController', () => {
       tags: ['test'],
     };
 
-    const result = { id: 1, ...dto, createdAt: new Date(), updatedAt: new Date() };
+    const result = {
+      id: 1,
+      ...dto,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
     mockPostsService.createPost.mockResolvedValue(result);
 
     expect(await controller.createPost(dto)).toEqual(result);

@@ -37,7 +37,12 @@ describe('PostsService', () => {
       tags: ['nestjs', 'testing'],
     };
 
-    const result = { id: 1, ...dto, createdAt: new Date(), updatedAt: new Date() };
+    const result = {
+      id: 1,
+      ...dto,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
     prisma.post.create.mockResolvedValue(result);
 
     expect(await service.createPost(dto)).toEqual(result);
@@ -54,7 +59,12 @@ describe('PostsService', () => {
 
   it('should update a post', async () => {
     const dto = { title: 'Updated Post' };
-    const result = { id: 1, ...dto, createdAt: new Date(), updatedAt: new Date() };
+    const result = {
+      id: 1,
+      ...dto,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
 
     prisma.post.findUnique.mockResolvedValue(result);
     prisma.post.update.mockResolvedValue(result);
