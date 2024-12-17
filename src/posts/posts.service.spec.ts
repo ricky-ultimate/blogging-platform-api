@@ -80,4 +80,41 @@ describe('PostsService', () => {
     expect(await service.deletePost(1)).toBeUndefined();
     expect(prisma.post.delete).toHaveBeenCalled();
   });
+
+  it('should return filtered posts by search term', async () => {
+    const searchTerm = 'Tech';
+    const mockPosts = [
+      {
+        id: 1,
+        title: 'Tech Post',
+        content: 'Content about tech',
+        category: 'Technology',
+        tags: ['Tech'],
+      },
+      {
+        id: 2,
+        title: 'Another Post',
+        content: 'Random content',
+        category: 'Lifestyle',
+        tags: ['Life'],
+      },
+    ];
+
+    prisma.post.findMany.mockResolvedValue([
+      mockPosts[0], // Only matching post
+    ]);
+
+    const result = await service.getAllPosts(searchTerm);
+
+    expect(result).toEqual([mockPosts[0]]);
+    expect(prisma.post.findMany).toHaveBeenCalledWith({
+      where: {
+        OR: [
+          { title: { contains: searchTerm, mode: 'insensitive' } },
+          { content: { contains: searchTerm, mode: 'insensitive' } },
+          { category: { contains: searchTerm, mode: 'insensitive' } },
+        ],
+      },
+    });
+  });
 });
